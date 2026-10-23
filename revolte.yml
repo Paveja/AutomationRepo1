@@ -1,0 +1,67 @@
+revolte:
+  version: '1'
+  project: 'Automation Project'
+  appName: 'Auto App 1'
+  env:
+    preview:
+      services:
+        rid_1:
+          type: WEB_SERVICE
+          entryPoint: src/app/page.tsx
+          properties:
+            health: /health
+            port: 8080
+            loadBalancerMode: shared
+            variables:
+              NODE_ENV: production
+              PORT: '8080'
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+    qa:
+      branch: qa
+      services:
+        rid_1:
+          type: WEB_SERVICE
+          entryPoint: src/app/page.tsx
+          properties:
+            health: /health
+            port: 8080
+            loadBalancerMode: shared
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+    staging:
+      branch: staging
+      services:
+        rid_1:
+          type: WEB_SERVICE
+          entryPoint: src/app/page.tsx
+          properties:
+            health: /health
+            port: 8080
+            loadBalancerMode: shared
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 30
+    production:
+      branch: main
+      services:
+        rid_1:
+          type: WEB_SERVICE
+          entryPoint: src/app/page.tsx
+          properties:
+            health: /health
+            port: 8080
+            loadBalancerMode: shared
+          specifications:
+            cpu: 2
+            memory: 2
+            storage: 50
+          autoScaling:
+            replica:
+              min: 1
+              max: 3
