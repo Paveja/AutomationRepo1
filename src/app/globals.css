@@ -1,0 +1,185 @@
+@import 'tailwindcss';
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  /* Joyful celebration palette */
+  --background: #fffaea;
+  --foreground: #1a1a2e;
+  --primary: #ff4d6d;
+  --primary-hover: #e63558;
+  --primary-foreground: #ffffff;
+  --secondary: #3d5af1;
+  --secondary-foreground: #ffffff;
+  --accent-gold: #ffd23f;
+  --accent-teal: #00c2a8;
+  --accent-purple: #c77dff;
+  --muted: #fff3c4;
+  --muted-foreground: #6b5d2f;
+  --border: #f0e6c0;
+  --ring: #3d5af1;
+  --radius: 1.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --font-display: var(--font-paytone);
+  --font-sans: var(--font-space-grotesk);
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────── */
+
+/* Confetti piece flying outward */
+@keyframes confetti-burst {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--rotate))
+      scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Celebration message pop-in */
+@keyframes message-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(4px);
+  }
+  60% {
+    transform: scale(1.08) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Button idle pulse (subtle) */
+@keyframes button-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 32px 0 rgba(255, 77, 109, 0.35),
+      0 1px 0 0 rgba(255, 255, 255, 0.25) inset;
+  }
+  50% {
+    box-shadow:
+      0 4px 48px 8px rgba(255, 77, 109, 0.55),
+      0 1px 0 0 rgba(255, 255, 255, 0.25) inset;
+  }
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    min-height: 100dvh;
+  }
+}
+
+/* ─── Confetti pieces ────────────────────────────────────────── */
+.confetti-piece {
+  position: fixed;
+  animation-name: confetti-burst;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* ─── Celebrate button ───────────────────────────────────────── */
+.celebrate-btn {
+  background: linear-gradient(135deg, #ff4d6d 0%, #ff7c3d 100%);
+  box-shadow:
+    0 4px 32px 0 rgba(255, 77, 109, 0.35),
+    0 1px 0 0 rgba(255, 255, 255, 0.25) inset,
+    0 -2px 0 0 rgba(0, 0, 0, 0.12) inset;
+  animation: button-pulse 2.8s ease-in-out infinite;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    filter 0.12s ease;
+}
+
+.celebrate-btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+  box-shadow:
+    0 6px 40px 4px rgba(255, 77, 109, 0.45),
+    0 1px 0 0 rgba(255, 255, 255, 0.3) inset,
+    0 -2px 0 0 rgba(0, 0, 0, 0.12) inset;
+  animation-play-state: paused;
+}
+
+.celebrate-btn:active:not(:disabled) {
+  transform: scale(0.94) translateY(1px);
+  box-shadow:
+    0 2px 12px 0 rgba(255, 77, 109, 0.3),
+    0 1px 0 0 rgba(255, 255, 255, 0.2) inset;
+  animation-play-state: paused;
+}
+
+.celebrate-btn:disabled {
+  animation-play-state: paused;
+  cursor: default;
+}
+
+.celebrate-btn:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 4px;
+  animation-play-state: paused;
+}
+
+/* ─── Celebration message ────────────────────────────────────── */
+.celebration-message {
+  animation: message-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  font-family: var(--font-display), var(--font-sans), 'Arial Black', sans-serif;
+  color: var(--color-secondary);
+  letter-spacing: -0.01em;
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece {
+    display: none;
+  }
+
+  .celebrate-btn {
+    animation: none;
+    transition: none;
+  }
+
+  .celebration-message {
+    animation: none;
+  }
+}
