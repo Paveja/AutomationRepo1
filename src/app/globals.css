@@ -1,0 +1,66 @@
+@import 'tailwindcss';
+
+:root {
+  /* Sunlit desk tool — warm paper canvas, dark ink, sunflower-yellow signature */
+  --canvas: #f4ead2;
+  --canvas-edge: #ebdcb8;
+  --ink: #241d10;
+  --ink-soft: #6b5d3f;
+
+  --surface: #fffdf6;
+  --surface-border: #e4d4a8;
+
+  /* Yellow signature scale */
+  --yellow: #ffc83d;
+  --yellow-strong: #f5b008;
+  --yellow-deep: #c98a00;
+  --yellow-ink: #3a2a00;
+
+  /* Keys */
+  --key: #fffaed;
+  --key-border: #e7d7ad;
+  --key-shadow: #d8c38a;
+
+  --operator: #ffd873;
+  --operator-border: #e9b53c;
+  --operator-shadow: #d19a1f;
+
+  --control: #efe4c7;
+  --control-border: #ddcc9f;
+  --control-shadow: #c9b685;
+
+  --danger: #c0392b;
+  --ring: #1e7a46;
+
+  --radius-key: 0.9rem;
+  --radius-card: 1.75rem;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-surface: var(--surface);
+  --color-yellow: var(--yellow);
+  --color-yellow-strong: var(--yellow-strong);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@layer base {
+  body {
+    background: radial-gradient(120% 120% at 50% 0%, var(--canvas) 0%, var(--canvas-edge) 100%);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
